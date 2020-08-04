@@ -16,13 +16,13 @@ public class TransitController {
     @Autowired
     private TransitService apiService;
 
-    @GetMapping(value = "/buses")
+    @GetMapping("/buses")
     public String getBusesPage(Model model){
         model.addAttribute("request", new BusRequest());
         return "index";
     }
 
-    @PostMapping(value = "/buses")
+    @PostMapping("/buses")
     public String getNearbyBuses(BusRequest request, Model model) {
         List<Bus> buses = apiService.getNearbyBuses(request);
         model.addAttribute("buses", buses);

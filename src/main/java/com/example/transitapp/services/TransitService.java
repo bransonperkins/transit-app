@@ -39,8 +39,8 @@ public class TransitService {
     }
 
     private double getDistance(Location origin, Location destination) {
-        String url = distanceUrl + "origins=" + origin.lat + "," + origin.lng
-                + "&destinations=" + destination.lat + "," + destination.lng + "&key=" + googleApiKey;
+        String url = distanceUrl + "origins=" + origin.lat + "," + origin.lng + "&destinations=" + destination.lat + ","
+                + destination.lng + "&key=" + googleApiKey;
         RestTemplate restTemplate = new RestTemplate();
         DistanceResponse response = restTemplate.getForObject(url, DistanceResponse.class);
         return response.rows.get(0).elements.get(0).distance.value * 0.000621371;
@@ -48,10 +48,8 @@ public class TransitService {
 
     public List<Bus> getNearbyBuses(BusRequest request) {
         List<Bus> allBuses = this.getBuses();
-
         Location personLocation = this.getCoordinates(request.address + " " + request.city);
         List<Bus> nearbyBuses = new ArrayList<>();
-
         for (Bus bus : allBuses) {
             Location busLocation = new Location();
             busLocation.lat = bus.LATITUDE;
@@ -69,4 +67,5 @@ public class TransitService {
         Collections.sort(nearbyBuses, new BusComparator());
         return nearbyBuses;
     }
+
 }
